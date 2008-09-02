@@ -1,0 +1,6 @@
+Use better parsing for render :partial
+    - should allow render "partial"
+    - use ruby2ruby?
+Search helpers as well as views for rendering
+Fix inspect for View.  Break out into subtypes:
+    View, PartialView, Helper
