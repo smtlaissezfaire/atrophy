@@ -20,8 +20,8 @@ module Atrophy
         output "Thanks for installing atrophy"
         output ""
         output "Run with the following command:"
-        output
-        output "  script/atrophy"
+        output ""
+        output "  ruby script/atrophy"
         output ""
       end
       
