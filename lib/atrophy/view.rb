@@ -1,32 +1,9 @@
 module Atrophy
-  class View
+  class View < GenericRailsFile
     VIEW_EXTENSIONS                  = %w(rhtml html.erb rjs)
     VIEW_EXTENSIONS_WITH_PERIODS     = VIEW_EXTENSIONS.map { |extension| ".#{extension}" }
     VIEW_EXTENSIONS_AS_REGEXP_STRING = VIEW_EXTENSIONS_WITH_PERIODS.join("|")
     VIEW_EXTENSIONS_AS_REGEXP        = Regexp.new(VIEW_EXTENSIONS_AS_REGEXP_STRING)
-    
-    def initialize(pathname, rails_root)
-      @pathname = pathname
-      @rails_root = rails_root
-    end
-    
-    attr_reader :pathname
-    
-    def relative_path_name
-      @pathname.gsub("#{@rails_root}/app/views/", "")
-    end
-    
-    def contents
-      @contents ||= File.read(pathname)
-    end
-    
-    def references?(other_view)
-      if in_same_view_dir?(other_view)
-        content_includes?(other_view.abbreviated_name) || content_includes?(other_view.abbreviated_basename)
-      else
-        content_includes?(other_view.abbreviated_name)
-      end
-    end
     
     def inspect
       if partial?
@@ -36,8 +13,8 @@ module Atrophy
       end
     end
     
-    def basename
-      File.basename(relative_path_name)
+    def relative_path_name
+      @pathname.gsub("#{@rails_root}/app/views/", "")
     end
     
     def abbreviated_name
@@ -48,21 +25,23 @@ module Atrophy
       remove_suffix(basename).gsub(/^_(.*)/) { $1 }
     end
     
-    def in_same_view_dir?(other_view)
-      view_dir == other_view.view_dir
+    def references?(other_view)
+      if in_same_view_dir?(other_view)
+        content_includes?(other_view.abbreviated_name) || content_includes?(other_view.abbreviated_basename)
+      else
+        super
+      end
     end
     
     def partial?
       basename =~ /^\_.*/ ? true : false
     end
     
-  private
-    
-    def content_includes?(string)
-      contents =~ /render\(?\s*\:partial\s*\=\>\s*.*["'](#{string})["']/ ? true : false
-    end
-    
   protected
+    
+    def in_same_view_dir?(other_view)
+      view_dir == other_view.view_dir
+    end
     
     def view_dir
       regexp_string = "#{@rails_root}/app/views/(.*)/[_A-Za-z0-9]+(#{VIEW_EXTENSIONS_AS_REGEXP_STRING})"

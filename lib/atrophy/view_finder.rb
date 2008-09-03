@@ -13,7 +13,7 @@ module Atrophy
       find_all.select { |view| view.partial? }
     end
     
-    def file_class
+    def file_class(empty = nil)
       View
     end
   end
