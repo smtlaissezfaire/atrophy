@@ -31,7 +31,17 @@ module Atrophy
     end
     
     def rails_root
-      "/Users/scott/src/git/flavorpill_com"
+      @rails_root ||= find_rails_root
+    end
+    
+    def find_rails_root(start_dir = File.dirname(__FILE__))
+      dir = File.expand_path(start_dir)
+      file = "#{dir}/config/environment.rb"
+      if File.exists?(file)
+        dir
+      else
+        find_rails_root("#{dir}/..")
+      end
     end
   end
 end
