@@ -1,15 +1,23 @@
+require "rubygems"
 require 'rake'
 require 'rake/testtask'
 require 'rake/rdoctask'
+require "spec/rake/spectask"
 
-desc 'Default: run unit tests.'
-task :default => :test
+desc 'Default: run unit tests (with rspec).'
+task :default => :spec
 
-desc 'Test the atrophy plugin.'
-Rake::TestTask.new(:test) do |t|
-  t.libs << 'lib'
-  t.pattern = 'test/**/*_test.rb'
-  t.verbose = true
+namespace :spec do
+  desc "Run all specs with RCov"
+  Spec::Rake::SpecTask.new(:rcov) do |t|
+    t.spec_files = FileList['spec/**/*_spec.rb']
+    t.rcov = true
+    t.rcov_opts = ['--exclude', 'spec']
+  end
+end
+
+Spec::Rake::SpecTask.new(:spec) do |t|
+  t.spec_files = FileList['spec/**/*_spec.rb']
 end
 
 desc 'Generate documentation for the atrophy plugin.'
