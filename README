@@ -1,13 +1,14 @@
 Atrophy
 =======
 
-Introduction goes here.
+A small script for checking for unused partials
 
 
 Example
 =======
 
-Example goes here.
+Run with ruby script/atrophy
 
 
-Copyright (c) 2008 [name of plugin creator], released under the MIT license
+Copyright (c) 2008 Scott Taylor <scott@railsnewbie.com>, dual licensed under the
+the GPL and MIT licenses (see GPL-LICENSE and MIT-LICENSE in the project root)
