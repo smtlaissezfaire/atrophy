@@ -58,8 +58,6 @@ module Atrophy
     
   private
     
-    QUOTE_MARKS = "(\\'|\\\")"
-    
     def content_includes?(string)
       contents =~ /render\(?\s*\:partial\s*\=\>\s*.*["'](#{string})["']/ ? true : false
     end
