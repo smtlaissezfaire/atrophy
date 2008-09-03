@@ -6,6 +6,10 @@ module Atrophy
         display_message
       end
       
+      def uninstall
+        rm "script/atrophy"
+      end
+      
       def copy_files
         cp "#{File.dirname(__FILE__)}/bin/atrophy", "script/"
       end

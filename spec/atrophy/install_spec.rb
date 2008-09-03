@@ -36,5 +36,16 @@ module Atrophy
         Installer.copy_files
       end
     end
+    
+    describe "uninstall" do
+      before :each do
+        Installer.stub!(:rm).and_return ""
+      end
+      
+      it "should remove the script/atrophy file" do
+        Installer.should_receive(:rm, "script/atrophy")
+        Installer.uninstall
+      end
+    end
   end
 end
