@@ -52,9 +52,8 @@ module Atrophy
       view_dir == other_view.view_dir
     end
     
-    #TODO
     def partial?
-      true
+      basename =~ /^\_.*/ ? true : false
     end
     
   private

@@ -7,6 +7,7 @@ module Atrophy
   
   autoload :Runner,     "#{dir}/runner"
   autoload :View,       "#{dir}/view"
+  autoload :FileFinder, "#{dir}/file_finder"
   autoload :ViewFinder, "#{dir}/view_finder"  
   autoload :Installer,  "#{dir}/installer"
 end

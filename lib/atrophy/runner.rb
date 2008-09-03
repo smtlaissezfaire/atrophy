@@ -6,30 +6,30 @@ module Atrophy
     
     def run
       partial_views.each do |view|
-        if no_other_views_reference_view?(view)
+        if no_other_files_reference_view?(view)
           report(view)
         end
       end
     end
     
-    def no_other_views_reference_view?(view)
-      !at_least_one_other_view_references_view?(view)
+    def no_other_files_reference_view?(view)
+      !at_least_one_other_file_references_view?(view)
     end
     
-    def at_least_one_other_view_references_view?(view)
-      first_view_to_reference_view(view) == nil ? false : true
+    def at_least_one_other_file_references_view?(view)
+      first_file_to_reference_view(view) == nil ? false : true
     end
     
-    def first_view_to_reference_view(view)
-      views.detect { |a_view| a_view.references?(view) }
+    def first_file_to_reference_view(view)
+      files.detect { |a_view| a_view.references?(view) }
     end
     
     def report(view)
       puts "* Couldn't find view #{view.pathname} referenced anywhere!"
     end
     
-    def views
-      @views ||= find_view_files
+    def files
+      @files ||= find_files
     end
     
     def partial_views
@@ -38,8 +38,8 @@ module Atrophy
     
   private
     
-    def find_view_files
-      ViewFinder.all
+    def find_files
+      FileFinder.all
     end
     
     def find_partial_views
